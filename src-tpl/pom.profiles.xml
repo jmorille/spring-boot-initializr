@@ -1,0 +1,187 @@
+<profiles>
+
+    <!-- configuration-->
+    <profile>
+        <id>config-env</id>
+        <activation>
+            <activeByDefault>true</activeByDefault>
+        </activation>
+        <properties>
+            <packaging.assembly.app.format>zip</packaging.assembly.app.format>
+            <iterator-maven-plugin.version>0.5.0</iterator-maven-plugin.version>
+            <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+        </properties>
+        <build>
+            <plugins>
+                <plugin>
+                    <groupId>com.soebes.maven.plugins</groupId>
+                    <artifactId>iterator-maven-plugin</artifactId>
+                    <version>${iterator-maven-plugin.version}</version>
+                    <executions>
+                        <!-- Resources Local : By Env(INT/QA/RECETTE/PROD) -->
+                        <execution>
+                            <id>make-it-assembly-resources</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>iterator</goal>
+                            </goals>
+                            <configuration>
+                                <itemsWithProperties>
+                                    <itemWithProptery>
+                                        <name>local</name>
+                                        <properties>
+                                            <serverEnv>local</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>docker</name>
+                                        <properties>
+                                            <serverEnv>docker</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>dev</name>
+                                        <properties>
+                                            <serverEnv>dev</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>qa</name>
+                                        <properties>
+                                            <serverEnv>qa</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>rec</name>
+                                        <properties>
+                                            <serverEnv>rec</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>prod</name>
+                                        <properties>
+                                            <serverEnv>prod</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                </itemsWithProperties>
+
+
+                                <pluginExecutors>
+                                    <pluginExecutor>
+                                        <!-- Configuration Iteration BEGIN -->
+                                        <plugin>
+                                            <groupId>org.apache.maven.plugins</groupId>
+                                            <artifactId>maven-assembly-plugin</artifactId>
+                                            <version>${maven-assembly-plugin.version}</version>
+                                        </plugin>
+                                        <goal>single</goal>
+                                        <configuration>
+                                            <useJvmChmod>true</useJvmChmod>
+                                            <appendAssemblyId>true</appendAssemblyId>
+                                            <tarLongFileMode>posix</tarLongFileMode>
+                                            <ignoreMissingDescriptor>true</ignoreMissingDescriptor>
+                                            <descriptors>
+                                                <descriptor>
+                                                    ${project.basedir}/src/main/config/assembly/assembly-resources.xml
+                                                </descriptor>
+                                            </descriptors>
+                                            <!-- to ignore missing file : https://issues.apache.org/jira/browse/MSHARED-514 -->
+                                            <filters>
+                                                <filter>${project.basedir}/src/main/config/environment/app.properties
+                                                </filter>
+                                                <filter>
+                                                    ${project.basedir}/src/main/config/environment/app-${serverEnv}.properties
+                                                </filter>
+                                            </filters>
+                                        </configuration>
+                                        <!-- Configuration Iteration END -->
+                                    </pluginExecutor>
+                                </pluginExecutors>
+
+                            </configuration>
+                        </execution>
+
+
+                        <!-- Config by Env(INT/QA/RECETTE/PROD)  -->
+                        <execution>
+                            <id>make-it-assembly-config</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>iterator</goal>
+                            </goals>
+                            <configuration>
+                                <itemsWithProperties>
+                                    <itemWithProptery>
+                                        <name>local</name>
+                                        <properties>
+                                            <serverEnv>local</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>docker</name>
+                                        <properties>
+                                            <serverEnv>docker</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                    <itemWithProptery>
+                                        <name>template</name>
+                                        <properties>
+                                            <serverEnv>template</serverEnv>
+                                        </properties>
+                                    </itemWithProptery>
+                                </itemsWithProperties>
+
+
+                                <pluginExecutors>
+                                    <pluginExecutor>
+                                        <!-- Configuration Iteration BEGIN -->
+                                        <plugin>
+                                            <groupId>org.apache.maven.plugins</groupId>
+                                            <artifactId>maven-assembly-plugin</artifactId>
+                                            <version>${maven-assembly-plugin.version}</version>
+                                        </plugin>
+                                        <goal>single</goal>
+                                        <configuration>
+                                            <useJvmChmod>true</useJvmChmod>
+                                            <appendAssemblyId>true</appendAssemblyId>
+                                            <tarLongFileMode>gnu</tarLongFileMode>
+                                            <useJvmChmod>true</useJvmChmod>
+                                            <ignoreMissingDescriptor>true</ignoreMissingDescriptor>
+                                            <descriptors>
+                                                <descriptor>src/main/config/assembly/assembly-config.xml</descriptor>
+                                            </descriptors>
+                                            <!-- to ignore missing file : https://issues.apache.org/jira/browse/MSHARED-514 -->
+                                            <filters>
+                                                <filter>
+                                                    ${project.basedir}/src/main/config/environment/config.properties
+                                                </filter>
+                                                <filter>
+                                                    ${project.basedir}/src/main/config/environment/config-${serverEnv}.properties
+                                                </filter>
+                                            </filters>
+                                        </configuration>
+                                        <!-- Configuration Iteration END -->
+
+
+                                    </pluginExecutor>
+                                </pluginExecutors>
+                            </configuration>
+                        </execution>
+
+
+                    </executions>
+                </plugin>
+            </plugins>
+
+        </build>
+    </profile>
+
+    <!-- directory package-->
+    <profile>
+        <id>todir</id>
+        <properties>
+            <packaging.assembly.app.format>dir</packaging.assembly.app.format>
+        </properties>
+    </profile>
+
+</profiles>

@@ -1,0 +1,4 @@
+		<!-- librairies -->
+		<jasypt-spring-boot-starter.version>2.1.1</jasypt-spring-boot-starter.version>
+        <springfox-swagger.version>2.9.2</springfox-swagger.version>
+		<!-- Java -->

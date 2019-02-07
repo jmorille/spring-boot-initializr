@@ -1,0 +1,20 @@
+        <!-- jasypt -->
+		<dependency>
+			<groupId>com.github.ulisesbocchio</groupId>
+			<artifactId>jasypt-spring-boot-starter</artifactId>
+			<version>${jasypt-spring-boot-starter.version}</version>
+		</dependency>
+
+        <!-- Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+        	<artifactId>springfox-swagger2</artifactId>
+        	<version>${springfox-swagger.version}</version>
+		</dependency>
+		<dependency>
+        	<groupId>io.springfox</groupId>
+        	<artifactId>springfox-swagger-ui</artifactId>
+        	<version>${springfox-swagger.version}</version>
+		</dependency>
+
+		<!-- spring boot -->
