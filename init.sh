@@ -24,7 +24,6 @@ strings=(
     "data-rest"
     "data-jpa"
     "mysql"
-    "h2"
     "flyway"
 )
 
