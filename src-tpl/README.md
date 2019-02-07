@@ -15,6 +15,9 @@ https://www.romaniancoder.com/spring-boot-live-reload-with-intellij/
 $ mvn clean spring-boot:run
 ```
 
+* http://localhost:8090/swagger-ui.html
+* http://localhost:8090/v2/api-docs
+
 ### Configuration
 
 #### Password encryption
