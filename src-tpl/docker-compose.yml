@@ -1,13 +1,13 @@
 version: "3.3"
 services:
 
-#  maven:
-#    image: maven:3.6.0-jdk-11
-#    volumes:
-#      - ".:/project"
-#    command: mvn clean spring-boot:run
-#    networks:
-#      - sapp-network
+  #  maven:
+  #    image: maven:3.6.0-jdk-11
+  #    volumes:
+  #      - ".:/project"
+  #    command: mvn clean spring-boot:run
+  #    networks:
+  #      - sapp-network
 
   mariadb:
     image: mariadb:10
@@ -15,7 +15,7 @@ services:
       - ./src/main/config/environment/config.properties
       - ./src/main/config/environment/config-docker.properties
     environment:
-      MYSQL_DATABASE: "db_example"
+      MYSQL_DATABASE: "appDB"
       MYSQL_USER: "springuser"
       MYSQL_PASSWORD: "ThePassword"
       MYSQL_ROOT_PASSWORD: "root"
