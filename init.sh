@@ -49,9 +49,6 @@ rm -f ${TARGET_ZIP}
 cp -r src-tpl/README.md ${ARTIFACT_ID}/
 cp -r src-tpl/docker-compose.yml ${ARTIFACT_ID}/
 
-# replace GROUP_ID
-sed -i "s/REPLACE_GROUP_ID/$GROUP_ID/g" ${ARTIFACT_ID}/*.*
-sed -i "s/REPLACE_ARTIFACT_ID/$ARTIFACT_ID/g" ${ARTIFACT_ID}/*.*
 
 # add project config
 cp -r src-tpl/main ${ARTIFACT_ID}/src/
@@ -63,11 +60,19 @@ cp -r src-tpl/main ${ARTIFACT_ID}/src/
 # append profiles to pom.dependencies.xml
 sed '/<dependencies>/ r src-tpl/pom.dependencies.xml' -i ${ARTIFACT_ID}/pom.xml
 sed '/<properties>/ r src-tpl/pom.properties.xml' -i ${ARTIFACT_ID}/pom.xml
+sed '/<description>/ r src-tpl/pom.description.xml' -i ${ARTIFACT_ID}/pom.xml
 
 # append  pom.profiles.xml
 POM_LINE_COUNT=$(wc -l ${ARTIFACT_ID}/pom.xml)
 line=$(($(wc -l <${ARTIFACT_ID}/pom.xml)-1 ))
 sed -e "${line}r src-tpl/pom.profiles.xml" -i ${ARTIFACT_ID}/pom.xml
+
+# ### ########################### ### #
+# ### Replace Root Value          ### #
+# ### ########################### ### #
+# replace GROUP_ID
+sed -i "s/REPLACE_GROUP_ID/$GROUP_ID/g" ${ARTIFACT_ID}/*.*
+sed -i "s/REPLACE_ARTIFACT_ID/$ARTIFACT_ID/g" ${ARTIFACT_ID}/*.*
 
 # ### ########################### ### #
 # ### Change configuration        ### #
@@ -101,6 +106,23 @@ sed -i "s/GROUP_ID/$GROUP_ID/g" ${FOLDER_JAVA_ROOT}/*/*.java
 
 # Maven call
 cd ${ARTIFACT_ID}
-mvn package
+
+# ### ########################### ### #
+# ### Init Git                    ### #
+# ### ########################### ### #
+git init
+git add .
+git commit -am "Init project"
+
+# compute remote url
+PROJECT_GIT_REMOTE_URL="git@gitlab-dei:sapp/${ARTIFACT_ID}.git"
+echo "Git remote Url $PROJECT_GIT_REMOTE_URL"
+git remote add origin $PROJECT_GIT_REMOTE_URL
+git remote -v
+
+# ### ########################### ### #
+# ### Build                       ### #
+# ### ########################### ### #
+# mvn package
 # cat ${FOLDER_JAVA_ROOT}/SwaggerConfig.java
 

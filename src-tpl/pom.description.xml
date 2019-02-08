@@ -1,0 +1,13 @@
+
+	<scm>
+		<connection>scm:git:ssh://gitlab-dei:sapp/REPLACE_ARTIFACT_ID.git</connection>
+		<developerConnection>scm:git:git@gitlab-dei:sapp/REPLACE_ARTIFACT_ID.git</developerConnection>
+		<url>http://gitlab-dei/sapp/REPLACE_ARTIFACT_ID.git</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<issueManagement>
+	  <system>JIRA</system>
+	  <url>https://jira.netapsys.fr/browse/SAPP/</url>
+	</issueManagement>
+
