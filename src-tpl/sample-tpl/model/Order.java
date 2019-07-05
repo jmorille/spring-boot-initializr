@@ -16,9 +16,12 @@ public class Order implements Serializable {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-    private String id;
+    String id;
 
-    private String orderNumber;
+    @Version
+    Long version;
+
+    String orderNumber;
 
 
 }

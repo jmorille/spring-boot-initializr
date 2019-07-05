@@ -19,7 +19,6 @@ services:
       MYSQL_USER: "springuser"
       MYSQL_PASSWORD: "ThePassword"
       MYSQL_ROOT_PASSWORD: "root"
-      PGDATA: "/var/lib/postgresql/data/pgdata"
     ports:
       - "3306:3306"
     volumes:

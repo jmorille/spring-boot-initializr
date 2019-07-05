@@ -25,6 +25,7 @@ strings=(
     "data-jpa"
     "mysql"
     "flyway"
+    "actuator"
 )
 
 SPRING_BOOT_STYLES=""
